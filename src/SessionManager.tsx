@@ -2,11 +2,12 @@ import { Text } from "@mantine/core"
 import React, { useCallback, useEffect, useState } from "react"
 import WS from "reconnecting-websocket"
 import { Controller } from "./Controller"
-import { ContentPlayerState, InitData, ServerInfo } from "./types"
+import { ContentPlayerState, InitData, ServerInfo, Service } from "./types"
 
 export const SessionManager: React.FC<{ host: string }> = ({ host }) => {
   const [serverInfo, setServerInfo] = useState<ServerInfo | null>(null)
   const [players, setPlayers] = useState(new Map<string, ContentPlayerState>())
+  const [services, setServices] = useState<Service[]>([])
   const [ws, setWs] = useState<WS | null>(null)
   const setter = useCallback(
     (p: object) => {
@@ -51,6 +52,7 @@ export const SessionManager: React.FC<{ host: string }> = ({ host }) => {
                 ])
               )
             )
+            setServices(initData.services)
             break
           }
           case "stateUpdate": {
@@ -83,6 +85,7 @@ export const SessionManager: React.FC<{ host: string }> = ({ host }) => {
           serverInfo={serverInfo}
           players={players}
           set={setter}
+          services={services}
         />
       ) : (
         <></>
