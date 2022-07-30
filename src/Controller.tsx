@@ -1,5 +1,10 @@
-import { Button, Grid, NativeSelect, Slider, Text } from "@mantine/core"
-import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons"
+import { Button, Grid, Group, NativeSelect, Slider, Text } from "@mantine/core"
+import {
+  IconPlayerPause,
+  IconPlayerPlay,
+  IconPlayerSkipBack,
+  IconPlayerSkipForward,
+} from "@tabler/icons"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ContentPlayerState, ServerInfo, Service } from "./types"
 import { useRefFromState } from "./utils"
@@ -49,6 +54,16 @@ export const Controller: React.FC<{
       }),
     [windowId, set]
   )
+  const setRelativeMove = useCallback(
+    (value: number) =>
+      set({
+        type: "setState",
+        windowId,
+        key: "setRelatieMove",
+        value,
+      }),
+    [windowId, set]
+  )
   return (
     <>
       <NativeSelect
@@ -94,6 +109,28 @@ export const Controller: React.FC<{
       >
         {selectedPlayer?.isPlaying === true ? "停止" : "再生"}
       </Button>
+      {selectedPlayer?.isSeekable && (
+        <Group mb="md" grow>
+          {[-60, -30, -10, 30, 60].map((value) => (
+            <Button
+              key={value}
+              component="button"
+              onClick={() => setRelativeMove(value * 1000)}
+              fullWidth={true}
+              disabled={!selectedPlayer || !isConnected}
+              leftIcon={
+                0 < value ? undefined : <IconPlayerSkipBack size={24} />
+              }
+              rightIcon={
+                0 < value ? <IconPlayerSkipForward size={24} /> : undefined
+              }
+              size="md"
+            >
+              {0 < value ? `+${value}` : value}s
+            </Button>
+          ))}
+        </Group>
+      )}
       <Slider
         size="md"
         value={volume}
