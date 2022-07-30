@@ -136,6 +136,27 @@ export const Controller: React.FC<{
             )
           })}
       </Grid>
+      <NativeSelect
+        my="lg"
+        size="lg"
+        data={services.map((service) => ({
+          label: service.name,
+          value: service.id.toString(),
+          group: service.channel.type,
+        }))}
+        disabled={!selectedPlayer || !isConnected}
+        value={selectedPlayer?.playingContent?.service?.id.toString()}
+        onChange={(event) => {
+          const selectedServiceId = parseInt(event.currentTarget.value)
+          if (
+            Number.isNaN(selectedServiceId) ||
+            !services.find((s) => s.id === selectedServiceId)
+          ) {
+            return
+          }
+          setServiceId(selectedServiceId)
+        }}
+      ></NativeSelect>
     </>
   )
 }

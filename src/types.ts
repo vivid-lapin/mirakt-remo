@@ -6,6 +6,7 @@ export type Service = {
   networkId: number
   name: string
   remoteControlKeyId?: number
+  channel: { type: string }
 }
 
 export declare type ContentPlayerPlayingContent = {
