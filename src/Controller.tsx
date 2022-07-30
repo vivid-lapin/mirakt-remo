@@ -51,7 +51,7 @@ export const Controller: React.FC<{
   )
   return (
     <>
-      <Text>
+      <Text mb="md">
         RMCN Version: {serverInfo.version} / App Version:{" "}
         {serverInfo.appVersion}
       </Text>
@@ -75,43 +75,36 @@ export const Controller: React.FC<{
         }}
         disabled={!isConnected}
       />
-      <Grid my="md">
-        <Grid.Col span={12}>
-          <Button
-            component="button"
-            leftIcon={
-              selectedPlayer?.isPlaying === true ? (
-                <IconPlayerPause size={32} />
-              ) : (
-                <IconPlayerPlay size={32} />
-              )
-            }
-            disabled={!selectedPlayer || !isConnected}
-            fullWidth={true}
-            size="lg"
-            onClick={() =>
-              set({
-                type: "setState",
-                windowId,
-                key: selectedPlayer?.isPlaying === true ? "pause" : "play",
-              })
-            }
-          >
-            {selectedPlayer?.isPlaying === true ? "停止" : "再生"}
-          </Button>
-        </Grid.Col>
-        <Grid.Col span={12}>
-          <Text size="md" mb="md">
-            音量
-          </Text>
-          <Slider
-            size="md"
-            value={volume}
-            onChange={setVolume}
-            onChangeEnd={setVolumeState}
-          />
-        </Grid.Col>
-      </Grid>
+      <Button
+        component="button"
+        leftIcon={
+          selectedPlayer?.isPlaying === true ? (
+            <IconPlayerPause size={32} />
+          ) : (
+            <IconPlayerPlay size={32} />
+          )
+        }
+        disabled={!selectedPlayer || !isConnected}
+        fullWidth={true}
+        size="lg"
+        onClick={() =>
+          set({
+            type: "setState",
+            windowId,
+            key: selectedPlayer?.isPlaying === true ? "pause" : "play",
+          })
+        }
+        my="lg"
+      >
+        {selectedPlayer?.isPlaying === true ? "停止" : "再生"}
+      </Button>
+      <Slider
+        size="md"
+        value={volume}
+        onChange={setVolume}
+        onChangeEnd={setVolumeState}
+        my="xl"
+      />
       <Grid>
         {[...Array(12).keys()]
           .map((i) => i + 1)
