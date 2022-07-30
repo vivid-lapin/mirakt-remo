@@ -21,6 +21,7 @@ export type ContentPlayerState = {
   isSeekable: boolean
   playingContent: ContentPlayerPlayingContent | null
   time: number
+  volume: number
 }
 
 export type InitData = {

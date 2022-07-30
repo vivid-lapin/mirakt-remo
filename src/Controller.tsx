@@ -1,6 +1,6 @@
-import { Button, Grid, NativeSelect, Space, Text } from "@mantine/core"
+import { Button, Grid, NativeSelect, Slider, Space, Text } from "@mantine/core"
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons"
-import React, { useEffect, useMemo } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ContentPlayerState, ServerInfo } from "./types"
 
 export const Controller: React.FC<{
@@ -19,6 +19,22 @@ export const Controller: React.FC<{
   const selectedPlayer = useMemo(
     () => players.get(windowId.toString()),
     [players, windowId]
+  )
+  const [volume, setVolume] = useState(selectedPlayer?.volume ?? 0)
+  useEffect(() => {
+    if (selectedPlayer) {
+      setVolume(selectedPlayer.volume)
+    }
+  }, [selectedPlayer])
+  const setVolumeState = useCallback(
+    (value: number) =>
+      set({
+        type: "setState",
+        windowId,
+        key: "setVolume",
+        value,
+      }),
+    [windowId, set]
   )
   return (
     <>
@@ -75,6 +91,17 @@ export const Controller: React.FC<{
             >
               {selectedPlayer.isPlaying === true ? "停止" : "再生"}
             </Button>
+          </Grid.Col>
+          <Grid.Col span={12}>
+            <Text size="md" mb="md">
+              音量
+            </Text>
+            <Slider
+              size="md"
+              value={volume}
+              onChange={setVolume}
+              onChangeEnd={setVolumeState}
+            />
           </Grid.Col>
         </Grid>
       )}
