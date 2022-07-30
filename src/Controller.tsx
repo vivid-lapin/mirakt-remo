@@ -2,6 +2,7 @@ import { Button, Grid, NativeSelect, Slider, Text } from "@mantine/core"
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ContentPlayerState, ServerInfo, Service } from "./types"
+import { useRefFromState } from "./utils"
 
 export const Controller: React.FC<{
   isConnected: boolean
@@ -11,9 +12,10 @@ export const Controller: React.FC<{
   services: Service[]
 }> = ({ isConnected, serverInfo, players, set, services }) => {
   const [windowId, setWindowId] = React.useState<number | undefined>(undefined)
+  const windowIdRef = useRefFromState(windowId)
   useEffect(() => {
     const window = players.values().next().value?.window
-    if (windowId === -1 && window) {
+    if (windowId === undefined && window) {
       setWindowId(window.windowId)
     }
   }, [players])
@@ -31,7 +33,7 @@ export const Controller: React.FC<{
     (value: number) =>
       set({
         type: "setState",
-        windowId,
+        windowId: windowIdRef.current,
         key: "setVolume",
         value,
       }),
