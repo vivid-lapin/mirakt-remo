@@ -1,4 +1,4 @@
-import { Button, Grid, NativeSelect, Slider, Space, Text } from "@mantine/core"
+import { Button, Grid, NativeSelect, Slider, Text } from "@mantine/core"
 import { IconPlayerPause, IconPlayerPlay } from "@tabler/icons"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { ContentPlayerState, ServerInfo, Service } from "./types"
