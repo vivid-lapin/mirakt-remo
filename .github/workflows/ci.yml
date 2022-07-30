@@ -77,7 +77,7 @@ jobs:
           name: dist
           path: dist
       - name: Deploy to surge
-        if: ${{ github.ref == 'refs/heads/master' && github.repository_owner == 'ci7lus' }}
+        if: ${{ github.ref == 'refs/heads/master' && github.repository_owner == 'vivid-lapin' }}
         uses: dswistowski/surge-sh-action@v1
         with:
           domain: "mirakt-remo.surge.sh"
