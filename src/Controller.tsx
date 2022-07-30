@@ -87,7 +87,7 @@ export const Controller: React.FC<{
         }}
         disabled={!isConnected}
       />
-      <Group grow>
+      <Group grow mt="lg">
         <Button
           component="button"
           leftIcon={
@@ -107,7 +107,6 @@ export const Controller: React.FC<{
               key: selectedPlayer?.isPlaying === true ? "pause" : "play",
             })
           }
-          my="lg"
         >
           {selectedPlayer?.isPlaying === true ? "停止" : "再生"}
         </Button>
@@ -124,13 +123,12 @@ export const Controller: React.FC<{
               key: "takeScreenshot",
             })
           }
-          my="lg"
         >
           SSを撮る
         </Button>
       </Group>
       {selectedPlayer?.isSeekable && (
-        <Group mb="md" grow>
+        <Group my="md" grow>
           {[-60, -30, -10, 30, 60].map((value) => (
             <Button
               key={value}
