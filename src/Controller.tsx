@@ -10,7 +10,7 @@ export const Controller: React.FC<{
   set: (p: object) => void
   services: Service[]
 }> = ({ isConnected, serverInfo, players, set, services }) => {
-  const [windowId, setWindowId] = React.useState<number>(-1)
+  const [windowId, setWindowId] = React.useState<number | undefined>(undefined)
   useEffect(() => {
     const window = players.values().next().value?.window
     if (windowId === -1 && window) {
@@ -18,7 +18,7 @@ export const Controller: React.FC<{
     }
   }, [players])
   const selectedPlayer = useMemo(
-    () => players.get(windowId.toString()),
+    () => (windowId ? players.get(windowId.toString()) : undefined),
     [players, windowId]
   )
   const [volume, setVolume] = useState(selectedPlayer?.volume ?? 0)
@@ -55,14 +55,11 @@ export const Controller: React.FC<{
       </Text>
       <NativeSelect
         size="md"
-        data={[
-          { label: "未選択", value: "-1" },
-          ...Array.from(players.values()).map((window) => ({
-            label: `${window.windowId}: ${window.playingContent?.service?.name} - ${window.playingContent?.program?.name}`,
-            value: window.windowId.toString(),
-          })),
-        ]}
-        placeholder="Pick one"
+        data={Array.from(players.values()).map((window) => ({
+          label: `${window.windowId}: ${window.playingContent?.service?.name} - ${window.playingContent?.program?.name}`,
+          value: window.windowId.toString(),
+        }))}
+        placeholder="プレイヤー選択"
         value={windowId}
         onChange={(event) => {
           const selectedWindowId = parseInt(event.currentTarget.value)
