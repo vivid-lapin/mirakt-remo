@@ -51,10 +51,6 @@ export const Controller: React.FC<{
   )
   return (
     <>
-      <Text mb="md">
-        RMCN Version: {serverInfo.version} / App Version:{" "}
-        {serverInfo.appVersion}
-      </Text>
       <NativeSelect
         size="md"
         data={Array.from(players.values()).map((window) => ({
@@ -153,6 +149,9 @@ export const Controller: React.FC<{
           setServiceId(selectedServiceId)
         }}
       ></NativeSelect>
+      <Text mt="md" align="center">
+        {`miraktest-rmcn version: ${serverInfo.version} / host version: ${serverInfo.appVersion}`}
+      </Text>
     </>
   )
 }
