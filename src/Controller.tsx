@@ -1,5 +1,6 @@
 import { Button, Grid, Group, NativeSelect, Slider, Text } from "@mantine/core"
 import {
+  IconCamera,
   IconPlayerPause,
   IconPlayerPlay,
   IconPlayerSkipBack,
@@ -86,29 +87,48 @@ export const Controller: React.FC<{
         }}
         disabled={!isConnected}
       />
-      <Button
-        component="button"
-        leftIcon={
-          selectedPlayer?.isPlaying === true ? (
-            <IconPlayerPause size={32} />
-          ) : (
-            <IconPlayerPlay size={32} />
-          )
-        }
-        disabled={!selectedPlayer || !isConnected}
-        fullWidth={true}
-        size="lg"
-        onClick={() =>
-          set({
-            type: "setState",
-            windowId,
-            key: selectedPlayer?.isPlaying === true ? "pause" : "play",
-          })
-        }
-        my="lg"
-      >
-        {selectedPlayer?.isPlaying === true ? "停止" : "再生"}
-      </Button>
+      <Group grow>
+        <Button
+          component="button"
+          leftIcon={
+            selectedPlayer?.isPlaying === true ? (
+              <IconPlayerPause size={32} />
+            ) : (
+              <IconPlayerPlay size={32} />
+            )
+          }
+          disabled={!selectedPlayer || !isConnected}
+          fullWidth={true}
+          size="lg"
+          onClick={() =>
+            set({
+              type: "setState",
+              windowId,
+              key: selectedPlayer?.isPlaying === true ? "pause" : "play",
+            })
+          }
+          my="lg"
+        >
+          {selectedPlayer?.isPlaying === true ? "停止" : "再生"}
+        </Button>
+        <Button
+          component="button"
+          leftIcon={<IconCamera />}
+          disabled={!selectedPlayer || !isConnected}
+          fullWidth={true}
+          size="lg"
+          onClick={() =>
+            set({
+              type: "setState",
+              windowId,
+              key: "takeScreenshot",
+            })
+          }
+          my="lg"
+        >
+          SSを撮る
+        </Button>
+      </Group>
       {selectedPlayer?.isSeekable && (
         <Group mb="md" grow>
           {[-60, -30, -10, 30, 60].map((value) => (
