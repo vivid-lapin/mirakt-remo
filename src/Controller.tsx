@@ -116,7 +116,7 @@ export const Controller: React.FC<{
               key={value}
               component="button"
               onClick={() => setRelativeMove(value * 1000)}
-              fullWidth={true}
+              fullWidth
               disabled={!selectedPlayer || !isConnected}
               leftIcon={
                 0 < value ? undefined : <IconPlayerSkipBack size={24} />
@@ -148,7 +148,8 @@ export const Controller: React.FC<{
               <Grid.Col span={4} key={i}>
                 <Button
                   size="lg"
-                  fullWidth={true}
+                  fullWidth
+                  compact
                   component="button"
                   disabled={!selectedPlayer || !isConnected || !service}
                   color="gray"
