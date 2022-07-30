@@ -104,6 +104,7 @@ export const Controller: React.FC<{
         onChange={setVolume}
         onChangeEnd={setVolumeState}
         my="xl"
+        max={200}
       />
       <Grid>
         {[...Array(12).keys()]
