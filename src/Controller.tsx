@@ -1,4 +1,12 @@
-import { Button, Grid, Group, NativeSelect, Slider, Text } from "@mantine/core"
+import {
+  Button,
+  Grid,
+  Group,
+  NativeSelect,
+  Select,
+  Slider,
+  Text,
+} from "@mantine/core"
 import {
   IconCamera,
   IconPlayerPause,
@@ -20,7 +28,7 @@ export const Controller: React.FC<{
   const [windowId, setWindowId] = React.useState<number | undefined>(undefined)
   const windowIdRef = useRefFromState(windowId)
   useEffect(() => {
-    const window = players.values().next().value?.window
+    const window = Array.from(players.values()).shift()
     if (windowId === undefined && window) {
       setWindowId(window.windowId)
     }
@@ -67,22 +75,25 @@ export const Controller: React.FC<{
   )
   return (
     <>
-      <NativeSelect
+      <Select
         size="md"
         data={Array.from(players.values()).map((window) => ({
-          label: `${window.windowId}: ${window.playingContent?.service?.name} - ${window.playingContent?.program?.name}`,
+          label: `${window.windowId}: ${
+            window.playingContent?.service?.name || "..."
+          } - ${window.playingContent?.program?.name || "..."}`,
           value: window.windowId.toString(),
         }))}
         placeholder="プレイヤー選択"
-        value={windowId}
-        onChange={(event) => {
-          const selectedWindowId = parseInt(event.currentTarget.value)
+        value={windowId?.toString()}
+        onChange={(value) => {
+          const selectedWindowId = parseInt(value || "")
           if (
             Number.isNaN(selectedWindowId) ||
             !players.has(selectedWindowId.toString())
           ) {
             return
           }
+
           setWindowId(selectedWindowId)
         }}
         disabled={!isConnected}

@@ -22,9 +22,9 @@
   "devDependencies": {
     "@ci7lus/eslint-config": "^1.1.1",
     "@emotion/react": "^11.9.3",
-    "@mantine/core": "^5.0.0",
-    "@mantine/form": "^5.0.0",
-    "@mantine/hooks": "^5.0.0",
+    "@mantine/core": "^5.0.2",
+    "@mantine/form": "^5.0.2",
+    "@mantine/hooks": "^5.0.2",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.0",
