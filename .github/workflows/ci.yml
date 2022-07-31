@@ -76,11 +76,19 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Deploy to surge
-        if: ${{ github.ref == 'refs/heads/master' && github.repository_owner == 'vivid-lapin' }}
-        uses: dswistowski/surge-sh-action@v1
+      - uses: actions/upload-pages-artifact@v1
         with:
-          domain: "mirakt-remo.surge.sh"
-          project: "./dist"
-          login: ${{ secrets.SURGE_LOGIN }}
-          token: ${{ secrets.SURGE_TOKEN }}
+          path: dist
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
