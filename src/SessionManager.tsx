@@ -27,6 +27,7 @@ export const SessionManager: React.FC<{ host: string }> = ({ host }) => {
       timer = setInterval(() => {
         ws.send(JSON.stringify({ type: "ping" }))
       }, 10_000)
+      setWs(ws)
     }
     ws.onclose = () => {
       if (timer) {
@@ -70,7 +71,6 @@ export const SessionManager: React.FC<{ host: string }> = ({ host }) => {
         }
       } catch {}
     }
-    setWs(ws)
     return () => {
       ws.close()
       setWs(null)
