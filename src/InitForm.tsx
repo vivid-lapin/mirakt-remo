@@ -22,6 +22,19 @@ export const InitForm: React.FC<{}> = () => {
 
   return (
     <>
+      {location.protocol === "https:" && (
+        <Button
+          type="button"
+          component="button"
+          onClick={() => {
+            location.protocol = "http:"
+          }}
+          mb="md"
+          size="md"
+        >
+          あなたはhttpsで接続しています！httpにする
+        </Button>
+      )}
       <form
         onSubmit={form.onSubmit((values) => {
           setHost(values.host)
@@ -31,7 +44,6 @@ export const InitForm: React.FC<{}> = () => {
           <Grid.Col span={9}>
             <TextInput
               required
-              label="Host"
               placeholder="localhost:10171"
               size="md"
               {...form.getInputProps("host")}
